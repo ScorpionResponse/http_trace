@@ -10,18 +10,15 @@ window.addEventListener("unload", function() {
   chrome.debugger.detach({tabId:tabId});
 });
 
-var requests = {};
-
 function onEvent(debuggeeId, message, params) {
   if (tabId != debuggeeId.tabId) {
     return;
   }
 
   if (message == "Network.requestWillBeSent") {
-    var requestDiv = requests[params.requestId];
-    if (!requestDiv) {
-      var requestDiv = $('<div>').addClass("address");
-      requests[params.requestId] = requestDiv;
+    var requestDiv = $('div.address[id="req-' + params.requestId + '"]');
+    if (requestDiv.length == 0) {
+      var requestDiv = $('<div>').addClass("address").attr("id", "req-" + params.requestId);
       $('<div>').addClass("url").text(params.request.url).appendTo(requestDiv);
     }
 
@@ -43,12 +40,12 @@ function onEvent(debuggeeId, message, params) {
 }
 
 function appendResponse(requestId, response) {
-  var requestDiv = requests[requestId];
-  requestDiv.append(formatHeaders(response.requestHeaders));
+  var requestDiv = $('div.address[id="req-' + requestId + '"]');
+  requestDiv.children().last().append(formatHeaders(response.requestHeaders));
 
   $('<div>').addClass("response").text("\nHTTP/1.1 " + response.status + " " +
           response.statusText).appendTo(requestDiv);
-  requestDiv.append(formatHeaders(response.headers));
+  requestDiv.children().last().append(formatHeaders(response.headers));
 }
 
 function formatHeaders(headers) {
