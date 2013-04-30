@@ -1,14 +1,8 @@
 
-var tabId = parseInt(window.location.search.substring(1));
-
-window.addEventListener("load", function() {
-  chrome.debugger.sendCommand({tabId:tabId}, "Network.enable");
-  chrome.debugger.onEvent.addListener(onEvent);
-});
-
-window.addEventListener("unload", function() {
-  chrome.debugger.detach({tabId:tabId});
-});
+function do_alert(info) {
+    alert(info);
+    $("#container").append(JSON.stringify(info));
+}
 
 function onEvent(debuggeeId, message, params) {
   if (tabId != debuggeeId.tabId) {

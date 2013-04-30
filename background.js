@@ -1,16 +1,12 @@
 
-var debug_version = "1.0";
+callback = function(details) {
+    do_alert(details);
+};
+
+filters = { urls: ["<all_urls>"]}
 
 chrome.browserAction.onClicked.addListener(function(tab) {
-  chrome.debugger.attach({tabId:tab.id}, debug_version, onAttach.bind(null, tab.id));
+  alert("clicked");
+  chrome.webRequest.onSendHeaders.addListener(callback, filters);
+  chrome.windows.create({url: "headers.html?" + tab.id, type: "popup", width: 800, height: 600});
 });
-
-function onAttach(tabId) {
-  if (chrome.runtime.lastError) {
-    alert(chrome.runtime.lastError.message);
-    return;
-  }
-
-  chrome.windows.create(
-      {url: "headers.html?" + tabId, type: "popup", width: 800, height: 600});
-}
