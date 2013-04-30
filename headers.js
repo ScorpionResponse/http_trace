@@ -1,6 +1,3 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
 
 var tabId = parseInt(window.location.search.substring(1));
 
@@ -29,6 +26,11 @@ function onEvent(debuggeeId, message, params) {
       urlLine.className = "url";
       urlLine.textContent = params.request.url;
       requestDiv.appendChild(urlLine);
+
+      var debugLine = document.createElement("div");
+      debugLine.className = "debug";
+      debugLine.textContent = JSON.stringify(params, undefined, 2);
+      requestDiv.appendChild(debugLine);
     }
 
     if (params.redirectResponse) {
