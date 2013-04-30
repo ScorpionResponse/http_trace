@@ -13,44 +13,30 @@ window.addEventListener("unload", function() {
 var requests = {};
 
 function onEvent(debuggeeId, message, params) {
-  if (tabId != debuggeeId.tabId)
+  if (tabId != debuggeeId.tabId) {
     return;
+  }
 
   if (message == "Network.requestWillBeSent") {
     var requestDiv = requests[params.requestId];
     if (!requestDiv) {
-      var requestDiv = document.createElement("div");
-      requestDiv.className = "address";
+      var requestDiv = $('<div>').addClass("address");
       requests[params.requestId] = requestDiv;
-      var urlLine = document.createElement("div");
-      urlLine.className = "url";
-      urlLine.textContent = params.request.url;
-      requestDiv.appendChild(urlLine);
-
-      var debugLine = document.createElement("div");
-      debugLine.className = "debug";
-      debugLine.textContent = JSON.stringify(params, undefined, 2);
-      requestDiv.appendChild(debugLine);
+      $('<div>').addClass("url").text(params.request.url).appendTo(requestDiv);
     }
 
     if (params.redirectResponse) {
       appendResponse(params.requestId, params.redirectResponse);
     }
 
-    var requestLine = document.createElement("div");
-    requestLine.className = "request";
-    requestLine.textContent = "\n" + params.request.method + " " +
-        parseURL(params.request.url).path + " HTTP/1.1";
-    requestDiv.appendChild(requestLine);
+    $('<div>').addClass("request").text("\n" + params.request.method + " " +
+        parseURL(params.request.url).path + " HTTP/1.1").appendTo(requestDiv);
 
     if (params.request.method === 'POST') {
-      var postLine = document.createElement("div");
-      postLine.className = "post";
-      postLine.textContent = "\npostData: \n" + params.request.postData;
-      requestDiv.lastChild.appendChild(postLine);
+      $('<div>').addClass("post").text("\n" + params.request.postData).appendTo(requestDiv);
     }
 
-    document.getElementById("container").appendChild(requestDiv);
+    $("#container").append(requestDiv);
   } else if (message == "Network.responseReceived") {
     appendResponse(params.requestId, params.response);
   }
@@ -58,23 +44,18 @@ function onEvent(debuggeeId, message, params) {
 
 function appendResponse(requestId, response) {
   var requestDiv = requests[requestId];
-  requestDiv.lastChild.appendChild(formatHeaders(response.requestHeaders));
+  requestDiv.append(formatHeaders(response.requestHeaders));
 
-  var statusLine = document.createElement("div");
-  statusLine.className = "response";
-  statusLine.textContent = "\nHTTP/1.1 " + response.status + " " +
-      response.statusText;
-  requestDiv.appendChild(statusLine);
-  requestDiv.lastChild.appendChild(formatHeaders(response.headers));
+  $('<div>').addClass("response").text("\nHTTP/1.1 " + response.status + " " +
+          response.statusText).appendTo(requestDiv);
+  requestDiv.append(formatHeaders(response.headers));
 }
 
 function formatHeaders(headers) {
   var text = "";
   for (name in headers)
     text += name + ": " + headers[name] + "\n";
-  var div = document.createElement("div");
-  div.className = "headers";
-  div.textContent = text;
+  var div = $('<div>').addClass("headers").text(text);
   return div;
 }
 
