@@ -2,9 +2,9 @@
   <head>
     <style>
       * {
-        margin: 0;
-	padding: 0;
-      } 
+        margin: 0px;
+	padding: 0px;
+      }
 
       html, body {
 	height: 100%;
@@ -12,13 +12,8 @@
         word-wrap: break-word;
       }
 
-      #wrap {
-        min-height: 100%;
-      }
-
       #container {
-        overflow: auto;
-	padding-bottom: 150px;
+        margin-top: 50px;
         white-space: pre;
       }
 
@@ -46,19 +41,11 @@
       .top-controls {
         position: fixed;
         top: 0;
+	height: 50px;
         width: 100%;
         z-index: 4;
         box-shadow: 0 0 10px black;
-	background: black;
-      }
-
-      .bottom-controls {
-        position: relative;
-	margin-top: -150px;
-	height: 150px;
-	background: black;
-        width: 100%;
-	clear: both;
+	background: #ebeff9;
       }
     </style>
 
@@ -67,9 +54,6 @@
   </head>
   <body>
     <div class="top-controls">Top Controls</div>
-    <div id="wrap">
-      <div id="container"></div>
-    </div>
-    <div class="bottom">Bottom Controls</div>
+    <div id="container"></div>
   </body>
 </html>
