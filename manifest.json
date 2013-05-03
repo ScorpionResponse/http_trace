@@ -3,7 +3,7 @@
 
   "name": "HTTP Trace",
   "description": "Tracks all HTTP requests made from the current tab.",
-  "version": "0.5",
+  "version": "0.6",
 
   "permissions": [
     "activeTab",
