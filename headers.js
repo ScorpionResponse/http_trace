@@ -1,17 +1,22 @@
 
 var tabId = parseInt(window.location.search.substring(1));
+var filters = { urls: ["<all_urls>"], tabId: tabId }
 
-callback = function(details) {
-    handleEvent(details);
-};
+function addListeners() {
+    chrome.webRequest.onBeforeRequest.addListener(handleEvent, filters, ['requestBody']);
+    chrome.webRequest.onSendHeaders.addListener(handleEvent, filters, ['requestHeaders']);
+    chrome.webRequest.onBeforeRedirect.addListener(handleEvent, filters, ['responseHeaders']);
+    chrome.webRequest.onCompleted.addListener(handleEvent, filters, ['responseHeaders']);
+    chrome.webRequest.onErrorOccurred.addListener(handleEvent, filters);
+}
 
-filters = { urls: ["<all_urls>"], tabId: tabId }
-
-chrome.webRequest.onBeforeRequest.addListener(callback, filters, ['requestBody']);
-chrome.webRequest.onSendHeaders.addListener(callback, filters, ['requestHeaders']);
-chrome.webRequest.onBeforeRedirect.addListener(callback, filters, ['responseHeaders']);
-chrome.webRequest.onCompleted.addListener(callback, filters, ['responseHeaders']);
-chrome.webRequest.onErrorOccurred.addListener(callback, filters);
+function removeListeners() {
+    chrome.webRequest.onBeforeRequest.removeListener(handleEvent);
+    chrome.webRequest.onSendHeaders.removeListener(handleEvent);
+    chrome.webRequest.onBeforeRedirect.removeListener(handleEvent);
+    chrome.webRequest.onCompleted.removeListener(handleEvent);
+    chrome.webRequest.onErrorOccurred.removeListener(handleEvent);
+}
 
 function handleEvent(details) {
     //$("#container").append("<!-- DEBUG: " + JSON.stringify(details) + "--> \n");
@@ -54,4 +59,35 @@ function formatHeaders(headers) {
     }
     var div = $('<div>').addClass("headers").text(text);
     return div;
+}
+
+// Controls
+
+$(function() {
+    addListeners();
+    $('button#clear').click(clearContent);
+    $('button#close').click(closeWindow);
+    $('button#pause').click(pauseCapture);
+});
+
+function clearContent() {
+    $('#container').empty();
+}
+
+function closeWindow() {
+    window.close();
+}
+
+function pauseCapture() {
+    removeListeners();
+    resumeButton = $('<button>').attr('id', 'resume').text("Resume");
+    $('button#pause').replaceWith(resumeButton);
+    $('button#resume').click(resumeCapture);
+}
+
+function resumeCapture() {
+    addListeners();
+    pauseButton = $('<button>').attr('id', 'pause').text("Pause");
+    $('button#resume').replaceWith(pauseButton);
+    $('button#pause').click(pauseCapture);
 }
