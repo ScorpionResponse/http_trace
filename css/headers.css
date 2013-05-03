@@ -1,0 +1,60 @@
+* {
+    margin: 0;
+    padding: 0;
+} 
+
+html, body {
+    height: 100%;
+    font-family: monospace;
+    word-wrap: break-word;
+}
+
+#container {
+    white-space: pre;
+    margin: 70px 20px 20px 20px;;
+}
+
+.address {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.request {
+}
+
+.url {
+}
+
+.response {
+}
+
+.headers {
+    margin-left: 10px;
+}
+
+.post {
+    margin-left: 10px;
+}
+
+.top-controls {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    z-index: 4;
+    box-shadow: 0 0 10px black;
+    background: #e9e9ea;
+}
+
+.top-controls ul {
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.top-controls ul li {
+    display: block;
+    position: relative;
+    float: right;
+}

@@ -1,59 +1,22 @@
 <html>
   <head>
-    <style>
-      * {
-        margin: 0px;
-	padding: 0px;
-      }
+    <title>HTTP Trace</title>
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="css/headers.css">
 
-      html, body {
-	height: 100%;
-        font-family: monospace;
-        word-wrap: break-word;
-      }
-
-      #container {
-        margin-top: 50px;
-        white-space: pre;
-      }
-
-      .address {
-        border-top: 1px solid black;
-      }
-
-      .request {
-      }
-
-      .url {
-      }
-
-      .response {
-      }
-
-      .headers {
-        margin-left: 10px;
-      }
-
-      .post {
-        margin-left: 10px;
-      }
-
-      .top-controls {
-        position: fixed;
-        top: 0;
-	height: 50px;
-        width: 100%;
-        z-index: 4;
-        box-shadow: 0 0 10px black;
-	background: #ebeff9;
-      }
-    </style>
-
-    <script src="headers.js"></script>
-    <script src="jquery-2.0.0.min.js"></script>
+    <script src="js/jquery-2.0.0.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/headers.js"></script>
+    <script src="js/ui.js"></script>
   </head>
   <body>
-    <div class="top-controls">Top Controls</div>
+      <div class="top-controls">
+          <ul>
+              <li><button id="close">Close</button></li>
+              <li><button id="clear">Clear</button></li>
+              <li><button id="pause">Pause</button></li>
+          </ul>
+      </div>
     <div id="container"></div>
   </body>
 </html>
