@@ -1,18 +1,26 @@
 <html>
   <head>
     <style>
-      body {
+      * {margin:0;padding:0;} 
+
+      html, body {
         font-family: monospace;
         word-wrap: break-word;
+	height: 100%;
+      }
+
+      #wrap {
+        min-height: 100%;
       }
 
       #container {
+        overflow: auto;
+	padding-bottom: 150px;
         white-space: pre;
       }
 
       .address {
         border-top: 1px solid black;
-        margin-bottom: 10px;
       }
 
       .request {
@@ -31,12 +39,34 @@
       .post {
         margin-left: 10px;
       }
+
+      .top-controls {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 4;
+        box-shadow: 0 0 10px black;
+	background: black;
+      }
+
+      .bottom-controls {
+        position: relative;
+	margin-top: -150px;
+	height: 150px;
+	background: black;
+        width: 100%;
+	clear: both;
+      }
     </style>
 
     <script src="headers.js"></script>
     <script src="jquery-2.0.0.min.js"></script>
   </head>
   <body>
-    <div id="container"></div>
+    <div class="top-controls">Top Controls</div>
+    <div id="wrap">
+      <div id="container"></div>
+    </div>
+    <div class="bottom">Bottom Controls</div>
   </body>
 </html>
