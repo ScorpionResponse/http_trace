@@ -80,14 +80,14 @@ function closeWindow() {
 
 function pauseCapture() {
     removeListeners();
-    resumeButton = $('<button>').attr('id', 'resume').text("Resume");
+    resumeButton = $('<button>').attr('id', 'resume').text("Resume").button();
     $('button#pause').replaceWith(resumeButton);
     $('button#resume').click(resumeCapture);
 }
 
 function resumeCapture() {
     addListeners();
-    pauseButton = $('<button>').attr('id', 'pause').text("Pause");
+    pauseButton = $('<button>').attr('id', 'pause').text("Pause").button();
     $('button#resume').replaceWith(pauseButton);
     $('button#pause').click(pauseCapture);
 }

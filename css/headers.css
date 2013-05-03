@@ -45,3 +45,16 @@ html, body {
     box-shadow: 0 0 10px black;
     background: #e9e9ea;
 }
+
+.top-controls ul {
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.top-controls ul li {
+    display: block;
+    position: relative;
+    float: right;
+}
