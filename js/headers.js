@@ -1,6 +1,6 @@
 
 var tabId = parseInt(window.location.search.substring(1));
-var filters = { urls: ["<all_urls>"], tabId: tabId }
+var filters = { urls: ["<all_urls>"], tabId: tabId };
 
 function addListeners() {
     chrome.webRequest.onBeforeRequest.addListener(handleEvent, filters, ['requestBody']);
@@ -21,8 +21,8 @@ function removeListeners() {
 function handleEvent(details) {
     //$("#container").append("<!-- DEBUG: " + JSON.stringify(details) + "--> \n");
     var addressDiv = $('div.address[id="req-' + details.requestId + '"]');
-    if (addressDiv.length == 0) {
-        var addressDiv = $('<div>').addClass("address").attr("id", "req-" + details.requestId);
+    if (addressDiv.length === 0) {
+        addressDiv = $('<div>').addClass("address").attr("id", "req-" + details.requestId);
         $("#container").append(addressDiv);
         $('<div>').addClass("url").text(details.url).appendTo(addressDiv);
     }
@@ -45,7 +45,7 @@ function handleEvent(details) {
 
 function formatPost(postData) {
     var text = "";
-    for (name in postData) {
+    for (var name in postData) {
         text += name + ": " + postData[name] + "\n";
     }
     var div = $('<div>').addClass("post").text(text);
@@ -54,7 +54,7 @@ function formatPost(postData) {
 
 function formatHeaders(headers) {
     var text = "";
-    for (i in headers) {
+    for (var i in headers) {
         text += headers[i].name + ": " + headers[i].value + "\n";
     }
     var div = $('<div>').addClass("headers").text(text);
@@ -80,14 +80,14 @@ function closeWindow() {
 
 function pauseCapture() {
     removeListeners();
-    resumeButton = $('<button>').attr('id', 'resume').text("Resume").button();
+    var resumeButton = $('<button>').attr('id', 'resume').text("Resume").button();
     $('button#pause').replaceWith(resumeButton);
     $('button#resume').click(resumeCapture);
 }
 
 function resumeCapture() {
     addListeners();
-    pauseButton = $('<button>').attr('id', 'pause').text("Pause").button();
+    var pauseButton = $('<button>').attr('id', 'pause').text("Pause").button();
     $('button#resume').replaceWith(pauseButton);
     $('button#pause').click(pauseCapture);
 }
