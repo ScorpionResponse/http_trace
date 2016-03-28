@@ -10,5 +10,4 @@ Original source: http://www.oxygen-icons.org/
 
 Also check out:
 
-- CloudFlare CDN Cache Monitor - https://github.com/xims/cf_cache_mon - Check
-cache status of loaded resources on the page.
+- CloudFlare CDN Cache Monitor - https://github.com/xims/cf_cache_mon - Check cache status of loaded resources on the page.
